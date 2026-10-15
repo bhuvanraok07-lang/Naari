@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
+import { useAuth } from '../../context/AuthContext';
 import { StorageService } from '../../services/storage';
 import { CycleEntry, PcosAssessmentData, DoctorVisitBrief, UserCycleProfile } from '../../types';
 import { LIFE_STAGE_GUIDANCE } from '../../data/medicalKnowledge';
@@ -25,6 +26,7 @@ interface DashboardPageProps {
 
 export const DashboardPage: React.FC<DashboardPageProps> = ({ setCurrentTab, openSettings }) => {
   const { t } = useLanguage();
+  const { user, isAuthenticated } = useAuth();
   const [cycleEntries, setCycleEntries] = useState<CycleEntry[]>([]);
   const [pcosAssessments, setPcosAssessments] = useState<PcosAssessmentData[]>([]);
   const [reports, setReports] = useState<DoctorVisitBrief[]>([]);
@@ -66,7 +68,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ setCurrentTab, ope
           <div className="flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-softPink text-nearBlack text-xs font-semibold">
               <ShieldCheck className="w-3.5 h-3.5 text-brandPurple" />
-              <span>Private Guest Storage • 100% Confidential</span>
+              <span>{isAuthenticated ? `Verified Health Account • ${user?.name}` : 'Private Guest Storage • 100% Confidential'}</span>
             </span>
             <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white border border-softPink-border text-brandPurple text-xs font-medium">
               <UserCheck className="w-3 h-3" />
@@ -74,7 +76,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ setCurrentTab, ope
             </span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-nearBlack font-display">
-            Welcome to NAARI AI
+            {isAuthenticated ? `Welcome back, ${user?.name}` : 'Welcome to NAARI AI'}
           </h1>
           <p className="text-sm text-nearBlack/75 leading-relaxed">
             Your private sanctuary for menstrual cycle intelligence, PCOS symptom exploration, and doctor-ready consultation briefs.

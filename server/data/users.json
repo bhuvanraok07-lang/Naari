@@ -1,0 +1,26 @@
+[
+  {
+    "id": "usr_priya_1792066882984",
+    "name": "Priya Sharma",
+    "normalizedName": "priya sharma",
+    "salt": "c0843ba15e6c5c2b01ff46a1c6071681",
+    "hash": "7a1a635f96368bdc50d5731087cf970b4fa1854fa1fcf3b73fe05a362db9ef3ceb7c38183d1337bc72c73068ae3c699274318fb2dc9bd5e07ab2dc6de40587f1",
+    "createdAt": "2026-10-15T12:21:23.054Z"
+  },
+  {
+    "id": "usr_ananya_1792066883055",
+    "name": "Dr. Ananya Rao",
+    "normalizedName": "dr. ananya rao",
+    "salt": "fa8474b21abf7f95217ae069ffc18a84",
+    "hash": "de4f92e8b51085cbb1988fed39d267fba52f275592812ed90885f507762838f7c492def08dfeec24977e4ccc0d2105a3402f4c58578eca92092848b482e5f427",
+    "createdAt": "2026-10-15T12:21:23.128Z"
+  },
+  {
+    "id": "usr_1792067506977_14eee8bb",
+    "name": "NaariCare@2026",
+    "normalizedName": "naaricare@2026",
+    "salt": "39ee56100960a08c6d1e9ca37468c85e",
+    "hash": "1b50dccd2e4ed66374e013aa5c0f7cf20218d815ad18e61fb66031b8ae8d29047420c7c1efa3fd330b76abc90e1f4c2b9e15152348908d8ae3579e9dd7e158f8",
+    "createdAt": "2026-10-15T12:31:46.979Z"
+  }
+]

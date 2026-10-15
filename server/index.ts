@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { z } from 'zod';
 import dotenv from 'dotenv';
+import { AuthService } from './auth';
 
 dotenv.config();
 
@@ -430,6 +431,60 @@ app.get('/api/medical-knowledge', (_req, res) => {
 // Health check
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', service: 'NAARI AI API (Enhanced)', time: new Date().toISOString() });
+});
+
+// Authentication Endpoints
+const LoginSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  password: z.string().min(1, 'Password is required'),
+});
+
+app.post('/api/auth/login', (req, res) => {
+  try {
+    const parsed = LoginSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({ error: 'Please enter both your name and password.' });
+    }
+    const { name, password } = parsed.data;
+    const result = AuthService.login(name, password);
+    if (!result.success) {
+      return res.status(result.status).json({ error: result.error });
+    }
+    return res.status(200).json({
+      success: true,
+      token: result.token,
+      user: result.user,
+    });
+  } catch (err: any) {
+    return res.status(500).json({ error: 'Authentication service error. Please try again.' });
+  }
+});
+
+app.get('/api/auth/session', (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    const token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : (req.query.token as string);
+    if (!token) {
+      return res.status(401).json({ authenticated: false });
+    }
+    const session = AuthService.verifySession(token);
+    return res.json(session);
+  } catch (err: any) {
+    return res.status(500).json({ authenticated: false, error: 'Session verification failed' });
+  }
+});
+
+app.post('/api/auth/logout', (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    const token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : (req.body?.token as string);
+    if (token) {
+      AuthService.logout(token);
+    }
+    return res.json({ success: true, message: 'Logged out successfully' });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: 'Logout failed' });
+  }
 });
 
 app.listen(PORT, () => {

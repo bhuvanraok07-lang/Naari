@@ -10,8 +10,12 @@ import {
   Globe, 
   Menu, 
   X,
-  HeartHandshake
+  HeartHandshake,
+  LogIn,
+  LogOut,
+  UserCheck
 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 interface NavbarProps {
   currentTab: string;
@@ -21,6 +25,7 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab, openSettings }) => {
   const { language, setLanguage, t } = useLanguage();
+  const { user, isAuthenticated, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
 
@@ -153,12 +158,47 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab, openS
             {/* Privacy & Settings Button */}
             <button
               onClick={openSettings}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-softPink-border text-nearBlack text-xs font-medium hover:bg-softPink-surface transition"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-softPink-border text-nearBlack text-xs font-medium hover:bg-softPink-surface transition"
               title="Privacy Controls & Settings"
             >
               <ShieldCheck className="w-3.5 h-3.5 text-brandPurple" />
               <span>{t.nav.privacy}</span>
             </button>
+
+            {/* Authentication Control: Login or User Pill */}
+            {isAuthenticated ? (
+              <div className="flex items-center gap-1.5 pl-1.5 border-l border-softPink-border/70">
+                <div 
+                  onClick={() => setCurrentTab('dashboard')}
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-softPink text-brandPurple text-xs font-semibold cursor-pointer hover:bg-softPink-hover transition shadow-2xs"
+                  title={`Logged in as ${user?.name}`}
+                >
+                  <UserCheck className="w-3.5 h-3.5 text-brandPurple" />
+                  <span className="max-w-[100px] truncate">{user?.name}</span>
+                </div>
+                <button
+                  onClick={() => logout()}
+                  className="p-1.5 text-mutedText hover:text-red-600 hover:bg-red-50 rounded-lg transition"
+                  title="Sign out"
+                  aria-label="Logout"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => setCurrentTab('login')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                  currentTab === 'login'
+                    ? 'bg-brandPurple text-white shadow-xs'
+                    : 'bg-brandPurple text-white hover:bg-brandPurple-hover shadow-soft-purple'
+                }`}
+                title="Sign in to your account"
+              >
+                <LogIn className="w-3.5 h-3.5" />
+                <span>Login</span>
+              </button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -205,7 +245,45 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab, openS
               </button>
             );
           })}
-          <div className="pt-3 border-t border-softPink-border/60 flex items-center justify-between">
+
+          {/* Mobile Login / User Profile */}
+          <div className="pt-2 border-t border-softPink-border/60">
+            {isAuthenticated ? (
+              <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-softPink/60">
+                <div className="flex items-center gap-2">
+                  <UserCheck className="w-4 h-4 text-brandPurple" />
+                  <span className="text-xs font-semibold text-nearBlack">{user?.name}</span>
+                </div>
+                <button
+                  onClick={() => {
+                    logout();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="flex items-center gap-1 text-xs text-red-600 font-medium py-1 px-2 rounded-md hover:bg-red-50"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => {
+                  setCurrentTab('login');
+                  setMobileMenuOpen(false);
+                }}
+                className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center gap-3 ${
+                  currentTab === 'login'
+                    ? 'bg-brandPurple text-white'
+                    : 'bg-softPink text-brandPurple'
+                }`}
+              >
+                <LogIn className="w-4 h-4" />
+                <span>Login</span>
+              </button>
+            )}
+          </div>
+
+          <div className="pt-2 border-t border-softPink-border/60 flex items-center justify-between">
             <button
               onClick={() => {
                 openSettings();

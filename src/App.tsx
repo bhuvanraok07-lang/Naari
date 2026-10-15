@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { LanguageProvider } from './context/LanguageContext';
+import { AuthProvider } from './context/AuthContext';
 import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
 import { DisclaimerBanner } from './components/common/DisclaimerBanner';
@@ -12,6 +13,7 @@ import { PcosCarePage } from './components/pcos/PcosCarePage';
 import { AiInterpreterPage } from './components/ai/AiInterpreterPage';
 import { AnalyticsPage } from './components/analytics/AnalyticsPage';
 import { ReportViewPage } from './components/report/ReportViewPage';
+import { LoginPage } from './components/auth/LoginPage';
 
 export const AppContent: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<string>('landing');
@@ -43,6 +45,7 @@ export const AppContent: React.FC = () => {
             openSettings={() => setIsSettingsOpen(true)} 
           />
         )}
+        {currentTab === 'login' && <LoginPage setCurrentTab={setCurrentTab} />}
         {currentTab === 'cycle' && <CycleCarePage />}
         {currentTab === 'pcos' && <PcosCarePage setCurrentTab={setCurrentTab} />}
         {currentTab === 'ai' && <AiInterpreterPage setCurrentTab={setCurrentTab} />}
@@ -69,7 +72,9 @@ export const AppContent: React.FC = () => {
 export const App: React.FC = () => {
   return (
     <LanguageProvider>
-      <AppContent />
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </LanguageProvider>
   );
 };
