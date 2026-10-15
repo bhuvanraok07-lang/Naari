@@ -54,45 +54,62 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab, openS
           {/* Logo & Brand Identity */}
           <div 
             onClick={() => setCurrentTab('landing')}
-            className="flex items-center gap-3 cursor-pointer group"
+            className="flex items-center gap-3 cursor-pointer group shrink-0 select-none py-1"
+            title="NAARI AI — Home"
           >
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-brandPurple to-brandPurple-hover flex items-center justify-center text-white shadow-soft-purple group-hover:scale-105 transition-transform duration-200">
-              <svg className="w-6 h-6 text-softPink" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C9.5 5 7 8 7 11.5C7 15 9.5 17.5 12 17.5C14.5 17.5 17 15 17 11.5C17 8 14.5 5 12 2Z" />
-                <circle cx="12" cy="19.5" r="2.5" fill="#E9A3C7" />
-              </svg>
+            {/* Reference 3: Official Logo Icon */}
+            <div className="relative shrink-0">
+              <img 
+                src="/naari-logo.png" 
+                alt="NAARI AI Official Emblem Logo" 
+                className="w-11 h-11 sm:w-12 sm:h-12 rounded-full object-cover shadow-soft-purple border border-amber-200/60 group-hover:scale-105 group-hover:rotate-1 transition-all duration-200 bg-white" 
+              />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-extrabold text-xl sm:text-2xl tracking-tight text-nearBlack font-display">
-                  NAARI <span className="text-brandPurple font-bold">AI</span>
-                </span>
-                <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-semibold bg-softPink text-nearBlack rounded-full border border-blush/40">
+
+            {/* Brand grouping: Name + Pill Badge + Tagline */}
+            <div className="flex flex-col justify-center min-w-0">
+              <div className="flex items-center gap-2 flex-nowrap">
+                {/* Reference 2: Brand-name design */}
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <img 
+                    src="/naari-wordmark.png" 
+                    alt="NAARI" 
+                    className="h-6 sm:h-7 w-auto object-contain shrink-0" 
+                  />
+                  <span className="font-extrabold text-base sm:text-lg tracking-tight text-brandPurple font-display leading-none">
+                    AI
+                  </span>
+                </div>
+
+                {/* Reference 1: Small elegant pill-shaped Care Platform badge */}
+                <span className="inline-flex items-center px-2 sm:px-2.5 py-0.5 text-[9px] sm:text-[10px] font-semibold tracking-wide bg-softPink text-brandPurple rounded-full border border-blush/40 whitespace-nowrap shadow-2xs">
                   Care Platform
                 </span>
               </div>
-              <p className="text-[11px] text-mutedText font-medium tracking-wide">
+
+              {/* Tagline placed below brand name */}
+              <p className="text-[10px] sm:text-[11px] text-mutedText font-medium tracking-normal whitespace-nowrap mt-0.5">
                 Small Symptoms, Big Answers.
               </p>
             </div>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
+          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5 shrink-0">
             {navLinks.map((item) => {
               const isActive = currentTab === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 flex items-center gap-1.5 ${
+                  className={`px-2 xl:px-2.5 py-1.5 rounded-lg text-xs xl:text-sm font-medium transition-all duration-150 flex items-center gap-1.5 whitespace-nowrap ${
                     isActive
                       ? 'bg-softPink text-brandPurple font-semibold shadow-xs'
                       : 'text-nearBlack hover:text-brandPurple hover:bg-softPink-light'
                   }`}
                 >
-                  {item.icon && <item.icon className={`w-4 h-4 ${isActive ? 'text-brandPurple' : 'text-blush-dark'}`} />}
-                  {item.label}
+                  {item.icon && <item.icon className={`w-3.5 h-3.5 xl:w-4 xl:h-4 ${isActive ? 'text-brandPurple' : 'text-blush-dark'}`} />}
+                  <span>{item.label}</span>
                 </button>
               );
             })}
