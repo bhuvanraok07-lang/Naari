@@ -68,21 +68,16 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, setCurrentTab, openS
 
             {/* Brand grouping: Name + Pill Badge + Tagline */}
             <div className="flex flex-col justify-center min-w-0">
-              <div className="flex items-center gap-2 flex-nowrap">
+              <div className="flex items-center gap-2.5 flex-nowrap">
                 {/* Reference 2: Brand-name design */}
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <img 
-                    src="/naari-wordmark.png" 
-                    alt="NAARI" 
-                    className="h-6 sm:h-7 w-auto object-contain shrink-0" 
-                  />
-                  <span className="font-extrabold text-base sm:text-lg tracking-tight text-brandPurple font-display leading-none">
-                    AI
-                  </span>
-                </div>
+                <img 
+                  src="/naari-wordmark.png" 
+                  alt="NAARI" 
+                  className="h-6 sm:h-7 w-auto object-contain shrink-0" 
+                />
 
                 {/* Reference 1: Small elegant pill-shaped Care Platform badge */}
-                <span className="inline-flex items-center px-2 sm:px-2.5 py-0.5 text-[9px] sm:text-[10px] font-semibold tracking-wide bg-softPink text-brandPurple rounded-full border border-blush/40 whitespace-nowrap shadow-2xs">
+                <span className="inline-flex items-center px-2.5 py-0.5 text-[9px] sm:text-[10px] font-semibold tracking-wide bg-softPink text-brandPurple rounded-full border border-blush/40 whitespace-nowrap shadow-2xs">
                   Care Platform
                 </span>
               </div>
