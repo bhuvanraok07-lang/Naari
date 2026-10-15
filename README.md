@@ -1,5 +1,6 @@
 # NAARI AI — Small Symptoms, Big Answers.
 > Women's Health Education, Symptom Clarity & Care-Navigation Platform | Built for the CHAOS Hackathon
+> URL - https://naari01.vercel.app/
 
 NAARI AI is an AI-powered, multilingual, private, non-diagnostic women's health education and care-navigation platform focused exclusively on:
 1. **Menstrual Cycle Care**
@@ -116,13 +117,11 @@ npm install
 ```bash
 npm run server
 ```
-*Backend runs on `http://localhost:5000`.*
 
 **Start Vite Frontend:**
 ```bash
 npm run dev
 ```
-*Frontend runs on `http://localhost:5173`.*
 
 ### 3. Production Build
 ```bash
